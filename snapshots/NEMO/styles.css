@@ -1,0 +1,354 @@
+:root {
+  --bg: #030b0c;
+  --bg-2: #071214;
+  --ink: #eaf6f2;
+  --muted: #7f9b97;
+  --accent: #41d5ee;
+  --accent-2: #8ce7a8;
+  --accent-3: #f0b6c8;
+  --card: rgba(3, 12, 14, 0.9);
+  --line: rgba(138, 186, 184, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(65, 213, 238, 0.16), transparent 24%),
+    radial-gradient(circle at 84% 0%, rgba(140, 231, 168, 0.14), transparent 28%),
+    radial-gradient(circle at 60% 88%, rgba(240, 182, 200, 0.1), transparent 24%),
+    linear-gradient(180deg, #020809 0%, #050d0f 44%, #010405 100%),
+    var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-shape {
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  filter: blur(50px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.shape-a {
+  top: 4vh;
+  left: -6vw;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(65, 213, 238, 0.16);
+}
+
+.shape-b {
+  right: -8vw;
+  bottom: -8vh;
+  width: 28rem;
+  height: 28rem;
+  background: rgba(140, 231, 168, 0.12);
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.hero {
+  margin-bottom: 1.2rem;
+  padding: 1.1rem 0 0.4rem;
+}
+
+.hero h1 {
+  margin: 0.25rem 0 0.55rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.1rem, 5vw, 4.3rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  max-width: 10ch;
+}
+
+.hero p {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin-bottom: 0.4rem !important;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.card {
+  margin-top: 1rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(138, 186, 184, 0.14);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(8, 16, 18, 0.94), rgba(3, 9, 11, 0.9));
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+}
+
+.card h2 {
+  margin: 0 0 0.8rem;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #dfeee8;
+  font-size: 0.92rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(138, 186, 184, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+  outline: none;
+}
+
+input:focus {
+  border-color: rgba(65, 213, 238, 0.5);
+  box-shadow: 0 0 0 4px rgba(65, 213, 238, 0.12);
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: 14px;
+  padding: 0.82rem 1.05rem;
+  font: inherit;
+  font-weight: 700;
+  color: #052126;
+  background: linear-gradient(135deg, var(--accent), #8df3f9);
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(65, 213, 238, 0.18);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(65, 213, 238, 0.28);
+  box-shadow: none;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin: 0.7rem 0 0.25rem;
+}
+
+.small,
+.formula,
+.result,
+.badge {
+  margin: 0.55rem 0;
+  padding: 0.82rem 0.92rem;
+  border-radius: 14px;
+}
+
+.small {
+  color: #b7f5c7;
+  background: rgba(140, 231, 168, 0.08);
+  border: 1px solid rgba(140, 231, 168, 0.24);
+}
+
+.formula-block {
+  display: grid;
+  gap: 1.8rem;
+  margin: 1.6rem 0;
+  padding: 1.2rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid rgba(140, 231, 168, 0.24);
+  background: rgba(140, 231, 168, 0.08);
+}
+
+.formula-stack {
+  gap: 2rem;
+}
+
+.formula-eq {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  color: #dff9e6;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+}
+
+.formula-var {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.formula-operator {
+  color: #95f5ff;
+  font-weight: 700;
+}
+
+.formula-term {
+  color: #eaf6f2;
+}
+
+.formula-power {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.28rem;
+}
+
+.formula-base {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #95f5ff;
+}
+
+.formula-exp {
+  font-size: 0.75rem;
+  line-height: 1;
+  transform: translateY(-0.45em);
+  color: #dff9e6;
+  margin-left: 0.08rem;
+}
+
+.formula-term .sum {
+  font-weight: 700;
+}
+
+.formula-block {
+  display: grid;
+  gap: 1.1rem; /* más separación interna entre elementos de la fórmula */
+  margin: 1rem 0; /* más separación respecto al contenido superior e inferior */
+  padding: 1.05rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(140, 231, 168, 0.24);
+  background: rgba(140, 231, 168, 0.08);
+}
+.formula-block {
+  display: grid;
+  gap: 1.8rem; /* más separación interna entre elementos de la fórmula */
+  margin: 1.6rem 0; /* más separación respecto al contenido superior e inferior */
+  padding: 1.2rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid rgba(140, 231, 168, 0.24);
+  background: rgba(140, 231, 168, 0.08);
+}
+.formula-stack {
+  gap: 2rem; /* más espacio entre las ecuaciones apiladas */
+}
+
+.fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 10.5rem;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.fraction-top,
+.fraction-bottom {
+  padding: 0.18rem 0.6rem;
+  margin: 0.08rem 0;
+}
+
+.fraction-line {
+  height: 1px;
+  margin: 0.12rem 0;
+  background: rgba(149, 245, 255, 0.55);
+}
+
+.formula {
+  color: #b7f5c7;
+  background: rgba(140, 231, 168, 0.08);
+  border: 1px solid rgba(140, 231, 168, 0.24);
+}
+
+.result {
+  border: 1px solid rgba(138, 186, 184, 0.18);
+  color: #d5ebe6;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid var(--line);
+  font-size: 0.86rem;
+  color: #ffd3df;
+  background: rgba(240, 182, 200, 0.08);
+}
+
+.badge.fail {
+  color: #ffb59c;
+  background: rgba(188, 75, 30, 0.12);
+  border-color: rgba(188, 75, 30, 0.4);
+}
+
+.interval {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.interval button {
+  align-self: end;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card,
+.hero {
+  animation: rise 0.5s ease both;
+}
+
+@media (max-width: 760px) {
+  .grid.two,
+  .interval {
+    grid-template-columns: 1fr;
+  }
+}

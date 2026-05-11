@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototipo - Esterilidad Termica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-shape shape-a"></div>
+  <div class="bg-shape shape-b"></div>
+
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">Ingenieria de procesos termicos</p>
+      <h1>Validador rapido de esterilidad</h1>
+      <p>Calcula letalidad, F real, F de diseno y tamano preliminar de equipo en una sola vista.</p>
+    </header>
+
+    <section class="card">
+      <h2>1) Letalidad instantanea</h2>
+      <div class="grid two">
+        <label>T (C)
+          <input id="temp" type="number" step="0.1" value="0">
+        </label>
+        <label>T_ref (C)
+          <input id="tref" type="number" step="0.1" value="0">
+        </label>
+        <label>Z (C)
+          <input id="z" type="number" step="0.1" value="0">
+        </label>
+      </div>
+      <button id="btnL" class="btn">Calcular L</button>
+      <p class="result" id="resultL">L = -</p>
+      <div class="formula-block">
+        <div class="formula-eq">
+          <span class="formula-var">L<sub>i</sub></span>
+          <span class="formula-operator">=</span>
+          <span class="formula-power">
+            <span class="formula-base">10</span>
+            <sup class="formula-exp">(T<sub>i</sub> − T<sub>ref</sub>)/Z</sup>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) F real y validacion</h2>
+      <p class="small">Ingresa perfil de temperatura por intervalos (T, Delta t en min)</p>
+      <div id="profile"></div>
+      <div class="row-actions">
+        <button id="addRow" class="btn ghost">Agregar intervalo</button>
+        <button id="calcF" class="btn">Calcular F real</button>
+      </div>
+
+      <div class="grid two">
+        <label>D (min para 90%)
+          <input id="d" type="number" step="0.01" value="0">
+        </label>
+        <label>Reducciones (n)
+          <input id="n" type="number" step="1" value="0">
+        </label>
+      </div>
+      <button id="calcDesign" class="btn">Calcular F de diseno</button>
+
+      <div class="formula-block">
+        <div class="formula-eq">
+          <span class="formula-var">F<sub>real</sub></span>
+          <span class="formula-operator">=</span>
+          <span class="formula-term">∑<sub>i</sub> L<sub>i</sub> · Δt<sub>i</sub></span>
+        </div>
+        <div class="formula-eq">
+          <span class="formula-var">F<sub>diseno</sub></span>
+          <span class="formula-operator">=</span>
+          <span class="formula-term">D · n</span>
+        </div>
+      </div>
+
+      <p class="result" id="resultFReal">F_real = -</p>
+      <p class="result" id="resultFDesign">F_diseno = -</p>
+      <p class="badge" id="validation">Estado: -</p>
+    </section>
+
+    <section class="card">
+      <h2>3) Balance de energia y area</h2>
+      <div class="grid two">
+        <label>Flujo masico m_dot (kg/s)
+          <input id="m" type="number" step="0.01" value="0">
+        </label>
+        <label>Cp (kJ/kg C)
+          <input id="cp" type="number" step="0.01" value="0">
+        </label>
+        <label>Delta T (C)
+          <input id="dT" type="number" step="0.1" value="0">
+        </label>
+        <label>U (kW/m2 C)
+          <input id="u" type="number" step="0.01" value="0">
+        </label>
+        <label>Delta T_lm (C)
+          <input id="dtlm" type="number" step="0.1" value="0">
+        </label>
+      </div>
+      <button id="calcHeat" class="btn">Calcular Q y A</button>
+      <p class="result" id="resultQ">Q = -</p>
+      <p class="result" id="resultA">A = -</p>
+      <div class="formula-block formula-stack">
+        <div class="formula-eq">
+          <span class="formula-var">Q</span>
+          <span class="formula-operator">=</span>
+          <span class="formula-term">m<sub>dot</sub> · C<sub>p</sub> · ΔT</span>
+        </div>
+        <div class="formula-eq">
+          <span class="formula-var">A</span>
+          <span class="formula-operator">=</span>
+          <span class="fraction">
+            <span class="fraction-top">Q</span>
+            <span class="fraction-line"></span>
+            <span class="fraction-bottom">U · ΔT<sub>lm</sub></span>
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
