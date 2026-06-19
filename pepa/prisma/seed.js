@@ -34,3 +34,5 @@ main()
     await prisma.$disconnect();
   });
 
+
+console.log('Seeding completed.');
