@@ -888,6 +888,10 @@ textarea:focus {
     padding: 1rem 0 2rem;
   }
 
+  .landing-shell {
+    width: min(100vw - 1rem, 1280px);
+  }
+
   .hero-copy,
   .hero-panel,
   .surface-card,
@@ -1040,16 +1044,26 @@ textarea:focus {
   max-width: 100%;
 }
 
-.footer-authors strong {
+.footer-authors__header {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.footer-authors__header strong {
   color: var(--accent-strong);
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  display: block;
-  margin-bottom: 1rem;
 }
 
-.footer-authors ul {
+.footer-authors__header p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.footer-contact-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -1058,26 +1072,29 @@ textarea:focus {
   gap: 1rem;
 }
 
-.footer-authors li {
+.footer-contact-list li {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
   border: 1px solid rgba(15, 118, 110, 0.2);
-  border-radius: 8px;
+  border-radius: 14px;
   padding: 1rem 1.25rem;
-  color: var(--text);
+  color: var(--ink);
   font-size: 0.95rem;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: grid;
+  gap: 0.35rem;
 }
 
-.footer-authors li::before {
-  content: '📞';
-  font-size: 1.2rem;
-  flex-shrink: 0;
+.footer-contact-list span {
+  font-size: 0.88rem;
+  color: var(--muted);
 }
 
-.footer-authors li:hover {
+.footer-contact-list strong {
+  font-size: 1.02rem;
+  color: var(--accent-strong);
+}
+
+.footer-contact-list li:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
   border-color: var(--accent);
   transform: translateY(-2px);

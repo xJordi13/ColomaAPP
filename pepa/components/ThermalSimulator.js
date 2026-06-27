@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toNumber } from '../lib/number';
 
 const DEFAULT_INPUTS = {
   N0: 1000000,
@@ -9,11 +10,6 @@ const DEFAULT_INPUTS = {
   DT: 1.5,
   z: 10,
 };
-
-function toNumber(value) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : 0;
-}
 
 function buildSimulation(inputs) {
   const N0 = Number(inputs.N0);

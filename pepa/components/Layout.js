@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Sidebar from './Sidebar';
+import { TEAM_CONTACTS } from '../lib/team';
 
 export default function Layout({ children }) {
   return (
@@ -9,12 +9,17 @@ export default function Layout({ children }) {
         {children}
         <footer className="app-footer">
           <div className="footer-authors">
-            <strong>Contactos</strong>
-            <ul>
-              <li>Ing. Jordi Palma: 0996802794</li>
-              <li>Ing. Andres Castro: 0978629359</li>
-              <li>Ing. Cristopher Perez: 0981623631</li>
-              <li>Ing. Jeremy Perez: 0986739453</li>
+            <div className="footer-authors__header">
+              <strong>Contactos</strong>
+              <p>Equipo responsable del proyecto y referencias para cambios de estructura o funcionalidades.</p>
+            </div>
+            <ul className="footer-contact-list">
+              {TEAM_CONTACTS.map((contact) => (
+                <li key={contact.phone}>
+                  <span>{contact.name}</span>
+                  <strong>{contact.phone}</strong>
+                </li>
+              ))}
             </ul>
           </div>
         </footer>

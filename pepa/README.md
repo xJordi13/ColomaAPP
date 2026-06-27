@@ -114,3 +114,4 @@ Luego configurar variables en Vercel dashboard:
 - [ ] Tests (Jest + React Testing Library)
 
 
+
