@@ -22,10 +22,13 @@ async function main() {
     }
   });
 
-  console.log('✓ User created:', user);
+  console.log('✓ User created:', { id: user.id, email: user.email, role: user.role });
 }
 
 main()
+  .then(() => {
+    console.log('Seeding completed.');
+  })
   .catch(e => {
     console.error('Seed error:', e);
     process.exit(1);
@@ -33,6 +36,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-
-
-console.log('Seeding completed.');

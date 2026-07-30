@@ -1,10 +1,10 @@
-import { SessionProvider } from 'next-auth/react'
-import './globals.css'
+import { ProcessProvider } from '../contexts/ProcessContext';
+import './globals.css';
 
-export default function App({ Component, pageProps: { session, ...pageProps } }) {
+export default function App({ Component, pageProps }) {
   return (
-    <SessionProvider session={session}>
+    <ProcessProvider enabled={Boolean(pageProps.user)}>
       <Component {...pageProps} />
-    </SessionProvider>
-  )
+    </ProcessProvider>
+  );
 }
