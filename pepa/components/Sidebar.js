@@ -1,52 +1,59 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-function useShortcuts() {
-  const router = useRouter();
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        router.push('/simulator');
-      }
-      if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        router.push('/validation');
-      }
-      if (e.key === 'e' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        router.push('/energy');
-      }
-      if (e.key === 'p' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        router.push('/profile');
-      }
-    }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [router]);
-}
+const navigation = [
+  { href: '/simulator', step: '01', label: 'Diseño del tratamiento' },
+  { href: '/validation', step: '02', label: 'Evaluación del tratamiento' },
+  { href: '/dashboard', step: '03', label: 'Resumen técnico' },
+];
 
-export default function Sidebar() {
-  useShortcuts();
+export default function Sidebar({ user }) {
+  const router = useRouter();
+
+  async function logout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.replace('/');
+  }
 
   return (
-    <aside className="app-sidebar">
+    <aside className="app-sidebar" aria-label="Navegación principal">
       <div className="sidebar-brand">
-        <h3>TermoSim</h3>
+        <span className="brand-mark" aria-hidden="true">T</span>
+        <div>
+          <strong>TermoSim</strong>
+          <small>Validación térmica didáctica</small>
+        </div>
       </div>
+
+      <div className="workflow-label">Flujo de trabajo</div>
       <nav className="sidebar-nav">
-        <ul>
-          <li><Link href="/simulator">Simulador</Link></li>
-          <li><Link href="/profile">Perfil/Intervalos</Link></li>
-          <li><Link href="/validation">Validación (Gráficos)</Link></li>
-          <li><Link href="/energy">Balance energía</Link></li>
-          <li><Link href="/dashboard">Resumen</Link></li>
-        </ul>
+        {navigation.map((item) => {
+          const active = router.pathname === item.href;
+          return (
+            <Link
+              href={item.href}
+              key={item.href}
+              className={active ? 'active' : ''}
+              aria-current={active ? 'page' : undefined}
+            >
+              <span>{item.step}</span>
+              <strong>{item.label}</strong>
+            </Link>
+          );
+        })}
       </nav>
+
       <div className="sidebar-footer">
-        <small>Atajos: Ctrl/Cmd+S Sim, Ctrl/Cmd+V Val, Ctrl/Cmd+E Energ, Ctrl/Cmd+P Perfil</small>
+        <div className="user-chip">
+          <span>{(user?.email || 'U').slice(0, 1).toUpperCase()}</span>
+          <div>
+            <strong>{user?.email || 'Usuario'}</strong>
+            <small>Sesión protegida</small>
+          </div>
+        </div>
+        <button type="button" className="text-button" onClick={logout}>
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );

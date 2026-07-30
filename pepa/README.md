@@ -1,117 +1,86 @@
-# Pepa - Validador de Esterilidad Térmica (Full-stack)
+# TermoSim
 
-Stack completo con **Next.js 13** + **JavaScript/React** + **Tailwind CSS** + **Prisma** + **SQLite** + **NextAuth**
+Aplicación didáctica para diseñar y evaluar tratamientos térmicos mediante
+reducciones decimales, valores D/z, letalidad y F acumulado.
 
-## 📋 Requisitos
+## Flujo
 
-- Node.js 16+ y npm
-- Eso es todo (SQLite es local, sin dependencias externas)
+1. **Diseño del tratamiento térmico:** define N₀, Nf, T, Tref, diferencia del
+   punto frío, Dref y z.
+2. **Evaluación del tratamiento térmico:** registra mediciones de tiempo y
+   temperatura. La aplicación calcula Δt, letalidad, contribución ΔF y F
+   acumulado.
+3. **Resumen técnico:** consolida parámetros, mediciones, F real, F de diseño y
+   el dictamen didáctico.
 
-## 🚀 Quick Start
+Los datos se guardan por usuario en SQLite y se comparten entre todas las
+pantallas.
 
-### 1. Instalar dependencias
+## Requisitos
 
-```bash
-cd pepa
-npm install --legacy-peer-deps
+- Node.js 20.9 o superior
+- npm
+
+## Configuración
+
+1. Copia `.env.example` como `.env`.
+2. Genera un secreto:
+
+```powershell
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-### 2. Configurar Prisma y crear BD
+3. Coloca el resultado en `NEXTAUTH_SECRET`.
+4. Instala y prepara la base:
 
-```bash
-npx prisma migrate dev --name init
+```powershell
+npm install
+npx prisma generate
+npx prisma migrate deploy
 npm run seed
 ```
 
-Esto creará:
-- Base de datos SQLite en `prisma/pepa.db` (archivo local)
-- Usuario de prueba: **profesorColoma@gmail.com** / **12345**
+5. Inicia la aplicación:
 
-### 3. Iniciar servidor de desarrollo
-
-```bash
+```powershell
 npm run dev
 ```
 
-Abre http://localhost:3000 en tu navegador.
+Acceso de demostración:
 
-## 🔐 Autenticación
+- Correo: `profesorColoma@gmail.com`
+- Contraseña: `12345`
 
-- Usa **NextAuth.js** con proveedores Credentials
-- El usuario `profesorColoma@gmail.com` / `12345` está preconfigurado
-- Las sesiones se mantienen usando JWT
-- Página protegida: `/dashboard` (requiere login)
+## Verificación
 
-## 📁 Estructura
-
-```
-pepa/
-├── pages/
-│   ├── index.tsx          # Login page
-│   ├── dashboard.js       # Dashboard protegido (con calculadora)
-│   ├── _app.js            # App wrapper con SessionProvider
-│   ├── globals.css        # Estilos globales (Tailwind)
-│   └── api/
-│       └── auth/
-│           └── [...nextauth].js  # Configuración NextAuth
-├── prisma/
-│   ├── schema.prisma      # Modelo de datos (SQLite)
-│   ├── seed.js            # Script de seeding
-│   └── pepa.db            # Base de datos SQLite (creada auto)
-├── .env                   # Variables de entorno
-├── tsconfig.json          # Config TypeScript
-├── next.config.js         # Config Next.js
-└── tailwind.config.js     # Config Tailwind
-
-```
-
-## 🛠️ Comandos útiles
-
-```bash
-# Desarrollo
-npm run dev
-
-# Build para producción
+```powershell
+npm test
 npm run build
-npm start
-
-# Prisma
-npx prisma migrate dev --name [name]    # Nueva migración
-npx prisma studio                       # GUI para explorar BD
-npm run seed                            # Re-seed de datos
+npm audit
 ```
 
-## 📊 Base de datos
+## Modelo de cálculo
 
-- **Provider:** SQLite (archivo local)
-- **Ubicación:** `prisma/pepa.db`
-- **Ventajas:** Sin instalación, sin servidor externo, perfecto para desarrollo
-
-Explora con:
-```bash
-npx prisma studio
+```text
+n = log10(N0 / Nf)
+D_T = D_ref × 10^((T_ref - T) / z)
+F_T = n × D_T
+L_i = 10^((T_i - T_ref) / z)
+ΔF_i = L_i × Δt_i
+F_real = Σ ΔF_i
 ```
 
-## 🌍 Despliegue
+La temperatura de cada fila representa el intervalo hasta la siguiente
+medición. La última fila cierra el perfil y no añade un intervalo nuevo.
 
-### Vercel (Recomendado para Next.js)
-```bash
-npm install -g vercel
-vercel
-```
+## Alcance
 
-Luego configurar variables en Vercel dashboard:
-- `DATABASE_URL` (si usas Postgres en producción)
-- `NEXTAUTH_SECRET` (generar valor seguro)
-- `NEXTAUTH_URL` (tu dominio en producción)
+TermoSim es una herramienta académica y de diseño preliminar. No constituye
+certificación, liberación sanitaria ni validación de un proceso industrial.
+Una aplicación real debe usar parámetros microbiológicos documentados,
+instrumentación calibrada, criterios regulatorios aplicables y revisión por
+personal competente.
 
-## 📝 Próximos pasos
-
-- [ ] Agregar más usuarios en la UI admin
-- [ ] Integrar base de datos de cálculos históricos
-- [ ] Exportar reportes (PDF/Excel)
-- [ ] Mejorar diseño con más componentes Tailwind
-- [ ] Tests (Jest + React Testing Library)
-
-
-
+El diseño prioriza trazabilidad, validación de entradas, consistencia de datos,
+seguridad de acceso, accesibilidad y mantenibilidad, en línea con principios de
+calidad de ISO/IEC 25010 y gestión de inocuidad de ISO 22000/Codex.
